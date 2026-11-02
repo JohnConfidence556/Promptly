@@ -1,0 +1,20 @@
+# Environment variables
+.env
+**/.env
+
+# Python virtual environments
+.venv/
+venv/
+**/.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local environment files
+.env.*
+!.env.example
+
+/backend/workspace/
+/backend/data/
+/backend/evals/results/results.jsonl

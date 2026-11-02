@@ -1,0 +1,1 @@
+TEST_USER = {"id": "testuser0001", "name": "Test User", "email": "test@example.com"}

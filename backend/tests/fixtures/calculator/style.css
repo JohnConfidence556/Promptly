@@ -1,0 +1,8 @@
+.calculator { max-width: 320px; margin: 2rem auto; }
+#display-area { padding: 1rem; font-size: 2rem; text-align: right; }
+.keypad-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.button { padding: 1rem; font-size: 1.25rem; cursor: pointer; }
+.number-button { background: #2ecc71; }
+.operation-button { background: #27ae60; }
+.control-button { background: #1e8449; }
+.active-operation { outline: 3px solid #ffffff; }
