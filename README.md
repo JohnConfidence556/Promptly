@@ -191,4 +191,4 @@ Hosted Postgres, magic-link sign-in, reconnecting to a build in progress, a real
 
 ## Author
 
-Built by **<John Confidence Bello>** · [LinkedIn](<https://www.linkedin.com/in/john-confidence-bello-/>) · [GitHub](<https://github.com/JohnConfidence556>)
+Built by **John Confidence Bello** · [LinkedIn](<https://www.linkedin.com/in/john-confidence-bello-/>) · [GitHub](<https://github.com/JohnConfidence556>)
