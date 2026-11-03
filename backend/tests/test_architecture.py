@@ -127,3 +127,12 @@ def test_schema_publishes_naming_patterns():
     schema_text = json.dumps(Architecture.model_json_schema())
 
     assert schema_text.count('"pattern"') >= 3
+
+def test_file_tasks_up_to_2000_characters_are_accepted():
+    data = valid_architecture()
+    data["file_tasks"][0]["task"] = "x" * 2000
+    Architecture.model_validate(data)
+
+    data["file_tasks"][0]["task"] = "x" * 2001
+    with pytest.raises(ValidationError):
+        Architecture.model_validate(data)

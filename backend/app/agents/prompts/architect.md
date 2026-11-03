@@ -25,3 +25,4 @@ You receive a validated Plan describing a simple web application. Design a preci
 - Make names and purposes specific to the user's Plan.
 - Ensure the three file tasks describe compatible implementations that share the same contract.
 - Return only a JSON object matching the supplied JSON schema. Do not include Markdown fences or additional commentary.
+- Keep each file task under 700 characters. Say what to build, not how to code it.

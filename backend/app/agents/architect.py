@@ -60,8 +60,11 @@ def parse_architecture(raw: str) -> Architecture:
         ) from exc
 
 
+MAX_DESIGN_ATTEMPTS = 2
+
+
 def design_architecture(plan: Plan) -> Architecture:
-    """Design a shared contract for the files described by a validated Plan."""
+    """Design a shared contract. If the reply is rejected, show the model why and retry."""
     instructions = _load_instructions()
 
     system_prompt = (
@@ -71,20 +74,38 @@ def design_architecture(plan: Plan) -> Architecture:
         f"{json.dumps(Architecture.model_json_schema(), indent=2)}"
     )
 
-    try:
-        result = ask_with_usage(
-            prompt=json.dumps(plan.model_dump(), indent=2),
-            system=system_prompt,
-            json_mode=True,
+    plan_json = json.dumps(plan.model_dump(), indent=2)
+    prompt = plan_json
+    last_error: ArchitectError | None = None
+
+    for attempt in range(1, MAX_DESIGN_ATTEMPTS + 1):
+        try:
+            result = ask_with_usage(prompt=prompt, system=system_prompt, json_mode=True)
+        except LLMError as exc:
+            raise ArchitectError(f"Architect LLM request failed: {exc}") from exc
+
+        logger.info(
+            "Architect call finished (attempt %s): prompt_tokens=%s completion_tokens=%s",
+            attempt,
+            result.prompt_tokens,
+            result.completion_tokens,
         )
-    except LLMError as exc:
-        raise ArchitectError(f"Architect LLM request failed: {exc}") from exc
 
-    # Log usage BEFORE parsing: failed generations still spend your quota.
-    logger.info(
-        "Architect call finished: prompt_tokens=%s completion_tokens=%s",
-        result.prompt_tokens,
-        result.completion_tokens,
-    )
+        try:
+            return parse_architecture(result.reply)
+        except ArchitectError as exc:
+            last_error = exc
+            logger.warning(
+                "Architect reply rejected (attempt %s/%s): %s",
+                attempt,
+                MAX_DESIGN_ATTEMPTS,
+                exc,
+            )
+            prompt = (
+                f"{plan_json}\n\n"
+                f"# Your previous reply was rejected\n{exc}\n"
+                "Return the complete corrected JSON object. "
+                "Keep every file task under 700 characters."
+            )
 
-    return parse_architecture(result.reply)
+    raise last_error if last_error else ArchitectError("The Architect produced no result.")

@@ -55,7 +55,7 @@ class FileTask(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     filename: Literal["index.html", "style.css", "script.js"]
-    task: str = Field(min_length=1, max_length=1000)
+    task: str = Field(min_length=1, max_length=2000)
 
 
 class Architecture(BaseModel):
