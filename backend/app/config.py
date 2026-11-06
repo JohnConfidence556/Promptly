@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # This is pointing to the project root.
 
 # Load environment variables from backend/.env
 load_dotenv(BASE_DIR / ".env")

@@ -2,7 +2,7 @@
 
 **Describe an app in plain English. Promptly plans it, writes it, checks its own work, and lets you keep refining it.**
 
-[Live demo](<https://promptly-two-delta.vercel.app/>) · [Demo video](<YOUR_VIDEO_URL>) · [Evaluation report](backend/evals/results/report.md)
+[Live demo](<https://promptly-two-delta.vercel.app/>) · [Demo video](<https://youtu.be/1Iby48S8OxE?si=o052YNNCtC4ydbzI>) · [Evaluation report](backend/evals/results/report.md)
 
 ![Promptly workspace](docs/workspace.png)
 ![Promptly landing page](docs/landing_page.png)
